@@ -38,8 +38,12 @@ app.get('/fish/last/name', function(req, res){
 
 app.post('/fish/new', function(req, res){
   var newFish = req.body;
-  fishiesList.push(newFish);
-  res.sendStatus(200);
+  if(newFish.name !== ''){
+    fishiesList.push(newFish);
+    res.sendStatus(200); // everytime you receive a request, you need to send a response
+  }else {
+    res.sendStatus(400);
+  }
 });
 
 

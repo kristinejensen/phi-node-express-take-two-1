@@ -1,25 +1,21 @@
-console.log('sourced!');
 $(document).ready(function(){
-  console.log('jquery was correctly sourced!');
   getFishData();
   function getFishData() {
     $.ajax({
       type: 'GET',
       url: '/fish',
       success: function(response) {
-        console.log('response', response);
         $('#fishTank').empty();
         for (var i = 0; i < response.length; i++) {
           $('#fishTank').append('<li>' + response[i].name + '</li>');
         }
       }
     });
-
+    
     $.ajax({
       type: 'GET',
       url: '/fish/first/name',
       success: function(response) {
-        console.log('response', response);
         $('#firstFishy').text(response);
       }
     });
@@ -35,6 +31,10 @@ $(document).ready(function(){
       success: function(response){
         console.log(response);
         getFishData();
+      },
+      error: function(error) {
+        $('#errorMessage').append('Error! Fish must contain a name: ', error.responseText + ' ' + error.status);
+        console.log('error', error);
       }
     });
   });
